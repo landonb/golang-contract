@@ -9,9 +9,12 @@ package contract
 
 import (
 	"log"
+	"os"
 )
 
-func contract(condition) {
+var LOG = log.New(os.Stdout, "[third-wish] ", log.Ldate|log.Lmicroseconds|log.LUTC)
+
+func Contract(condition bool) {
 	if condition {
 		LOG.Printf("contract failure: %+v", condition)
 // FIXME: Introspect and print file/line of cbdfail.
@@ -21,7 +24,8 @@ func contract(condition) {
 	}
 }
 
-func setLogger() {
+func SetLogger() {
 	// FIXME: Implement.
+	// or should I just default to using the juju logger?
 }
 
