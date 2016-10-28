@@ -7,6 +7,21 @@
 
 package contract
 
+import (
+	"log"
+)
 
+func contract(condition) {
+	if condition {
+		LOG.Printf("contract failure: %+v", condition)
+// FIXME: Introspect and print file/line of cbdfail.
+// FIXME: dlv connect --init="set_breakpoints.dlv" localhost:3001
+//          where set_breakpoints.dlv is
+//          break contract.go:16
+	}
+}
 
+func setLogger() {
+	// FIXME: Implement.
+}
 
