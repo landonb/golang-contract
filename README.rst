@@ -166,6 +166,6 @@ You'll probably need 3 terminal windows to work effectively
 Note that you won't have to touch the ``tail`` terminal,
 but anytime you rebuild and rerun the ``my-app`` container,
 you'll have to ``Ctrl-D`` from the debugger,
-``dlv connect`` again, and set the break again
+``dlv connect`` again, and set the breakpoint again
 (using the trick described above).
 
