@@ -45,16 +45,21 @@ An (abbreviated) Dockerfile might look like this:
     ENV GOPATH /app
     ENTRYPOINT ["/app/bin/dlv", "debug", "--headless=true", "--listen=0.0.0.0:3001", "--log", "my-app"]
 
-Build the container::
+Build the container:
+
+.. code-block:: bash
 
     GOPATH=$GOPATH:$(pwd -P) go build my-app
 
-Run the container (and use ``--privileged`` so that ``dlv`` works)::
+Run the container (and use ``--privileged`` so that ``dlv`` works):
 
-    eval "docker run -d --privileged -p 3000:3000 -p 3001:3001 \
-        --name my-app my-app"
+.. code-block:: bash
 
-Connect to the debugger::
+    eval "docker run -d --privileged -p 3000:3000 -p 3001:3001 --name my-app my-app"
+
+Connect to the debugger:
+
+.. code-block:: bash
 
     dlv connect localhost:3001
 
@@ -66,7 +71,9 @@ And then don't forget to run your app with ``continue``::
 
     c
 
-To set breakpoints in your application code, add soft asserts, like this::
+To set breakpoints in your application code, add soft asserts, like this:
+
+.. code-block:: go
 
     import "github.com/landonb/golang-contract"
 
@@ -102,36 +109,46 @@ and having to restart the log every time you rebuild the container.
 
   For example, start the ``syslog`` daemon, and then point docker to it.
 
-  - Create a configuration file. We'll call it ``rsyslogd.conf``::
+Create a configuration file. We'll call it ``rsyslogd.conf``:
 
-      cat > /path/to/my/syslog.conf << EOF
-          $ModLoad imtcp
-          $InputTCPServerRun 10514
-          *.* /path/to/my/syslog.log
-      EOF
+.. code-block:: bash
 
-  - Run the daemon. Point it to your file and also to a PID file that it'll maintain::
+    cat > /path/to/my/syslog.conf << EOF
+        $ModLoad imtcp
+        $InputTCPServerRun 10514
+        *.* /path/to/my/syslog.log
+    EOF
 
-      touch /path/to/my/syslog.pid
-      /usr/sbin/rsyslogd \
-          -f /path/to/my/syslog.conf \
-          -i /path/to/my/syslog.pid
+- Run the daemon. Point it to your file and also to a PID file that it'll maintain:
 
-  - And then from another terminal, tail it::
+.. code-block:: bash
 
-      tail -f /path/to/my/syslog.log
+    touch /path/to/my/syslog.pid
+    /usr/sbin/rsyslogd \
+        -f /path/to/my/syslog.conf \
+        -i /path/to/my/syslog.pid
 
-  - Now run your container, and specify the ``syslog`` logging driver::
+- And then from another terminal, tail it:
 
-      eval "docker run -d --privileged -p 3000:3000 -p 3001:3001 \
-          --log-driver syslog \
-          --log-opt syslog-address=tcp://localhost:10514 \
-          --name my-app my-app"
+.. code-block:: bash
+
+    tail -f /path/to/my/syslog.log
+
+- Now run your container, and specify the ``syslog`` logging driver:
+
+.. code-block:: bash
+
+    docker run -d --privileged -p 3000:3000 -p 3001:3001 \
+        --log-driver syslog \
+        --log-opt syslog-address=tcp://localhost:10514 \
+        --name my-app my-app
 
 It's easy to restart the container
 ----------------------------------
 
-Every time you exit from the debugger, your application halts. It's easy to restart it::
+Every time you exit from the debugger, your application halts. It's easy to restart it:
+
+.. code-block:: bash
 
     docker restart my-app
 
