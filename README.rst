@@ -65,11 +65,11 @@ Connect to the debugger:
 
 Hook the ``Contract()`` function::
 
-    break contract.go:19
+    (dlv) break contract.go:19
 
 And then don't forget to run your app with ``continue``::
 
-    c
+    (dlv) c
 
 To set breakpoints in your application code, add soft asserts, like this:
 
@@ -97,7 +97,7 @@ commands, so can also do so you in Delve.
 
   E.g., type ``b`` and the hit the up arrow, then probably Enter -- c'est tout.::
 
-    b<UP><ENTER>
+    (dlv) b<UP><ENTER>
 
 It's easy to ``tail`` the container output
 ------------------------------------------
