@@ -12,20 +12,22 @@ import (
 	"os"
 )
 
-var LOG = log.New(os.Stdout, "[third-wish] ", log.Ldate|log.Lmicroseconds|log.LUTC)
+var LOG = log.New(os.Stdout, "[Contract] ", log.Ldate|log.Lmicroseconds|log.LUTC)
 
 func Contract(condition bool) {
 	if !condition {
-		LOG.Printf("contract failure: %+v", condition)
-// FIXME: Introspect and print file/line of cbdfail.
-// FIXME: dlv connect --init="set_breakpoints.dlv" localhost:3001
-//          where set_breakpoints.dlv is
-//          break contract.go:19
+		LOG.Printf("Contract failure: %+v", condition)
+		// FIXME: Introspect and print file/line of caller.
+		// LATER: dlv connect --init="set_breakpoints.dlv" localhost:3001
+		//            where set_breakpoints.dlv is
+		//            break contract.go:19
+		//        doesn't work. Perhaps one day we can make it work?
 	}
 }
 
-func SetLogger() {
-	// FIXME: Implement.
-	// or should I just default to using the juju logger?
-}
+// MAYBE: Implement SetLogger so app can specify an alternative logger.
+//        E.g., maybe the rest of the app uses another logger,
+//              like the juju logger (https://github.com/juju/loggo)
+//func SetLogger() {
+//}
 
