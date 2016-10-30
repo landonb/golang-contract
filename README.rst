@@ -55,7 +55,7 @@ Run the container (and use ``--privileged`` so that ``dlv`` works):
 
 .. code-block:: bash
 
-    eval "docker run -d --privileged -p 3000:3000 -p 3001:3001 --name my-app my-app"
+    docker run -d --privileged -p 3000:3000 -p 3001:3001 --name my-app my-app
 
 Connect to the debugger:
 
