@@ -21,11 +21,13 @@ func Contract(condition bool) {
 		pc, fn, line, _ := runtime.Caller(1)
 		fcn := runtime.FuncForPC(pc).Name()
 		LOG.Printf("Contract failure in %s[%s:%d]: %+v", fcn, fn, line, condition)
-		// FIXME: Introspect and print file/line of caller.
-		// LATER: dlv connect --init="set_breakpoints.dlv" localhost:3001
-		//            where set_breakpoints.dlv is
-		//            break contract.go:19
-		//        doesn't work. Perhaps one day we can make it work?
+		// Golang does not let code force a break, like JavaScript's debugger,
+		// or Ruby byebug's byebug, or Python's pdb.set_trace(), etc. However,
+		// you can tell dlv to run commands when it loads, e.g., tell it to break
+		// herein. E.g.,
+		//
+		//    echo "break ${HOME}/.gopath/src/github.com/landonb/golang-contract/contract.go:23" > bps.dlv
+		//    dlv exec --init="bps.dlv" -- foo bar --baz --bat
 	}
 }
 
